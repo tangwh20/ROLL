@@ -31,14 +31,14 @@ system_envs:
 
 track_with: tensorboard
 tracker_kwargs:
-  log_dir: /data/oss_bucket_0/yali/llm/tensorboard/roll_exp/agentic_frozen_lake
+  log_dir: ./output/tensorboard
 
 
 checkpoint_config:
   type: file_system
-  output_dir: /data/cpfs_0/rl_examples/models/${exp_name}
+  output_dir: ./output/checkpoints/${exp_name}
 
-num_gpus_per_node: 8
+num_gpus_per_node: 4
 
 max_steps: 1024
 save_steps: 10000
@@ -88,7 +88,7 @@ actor_train:
       expert_model_parallel_size: 1
       use_distributed_optimizer: true
       recompute_granularity: full
-  device_mapping: list(range(0,8))
+  device_mapping: list(range(0,4))
   infer_batch_size: 2
 
 actor_infer:
@@ -110,7 +110,7 @@ actor_infer:
       gpu_memory_utilization: 0.8
       block_size: 16
       load_format: auto
-  device_mapping: list(range(0,8))
+  device_mapping: list(range(0,4))
 
 reference:
   model_args:
@@ -123,7 +123,7 @@ reference:
   strategy_args:
     strategy_name: hf_infer
     strategy_config: ~
-  device_mapping: list(range(0,8))
+  device_mapping: list(range(0,4))
   infer_batch_size: 2
 
 reward_normalization:
